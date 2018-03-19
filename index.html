@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="robots" content="noindex, nofollow">
+    <meta name="description" content="This program finds the mode given an array of numbers.">
+    <meta name="author" content="https://github.com/lautomator">
+    <title>Get the Mode</title>
+    <style>
+        body,
+        textarea { font-family: "Monaco", sans-serif; }
+
+        .container {
+            height: auto;
+            margin: 0 auto;
+            overflow: hidden;
+            width: 600px;
+        }
+
+        table {
+            border-collapse: collapse;
+            margin: 25px 0;
+            width: 100%;
+        }
+
+        td {
+            height: auto;
+            vertical-align: top;
+        }
+
+        .data td {
+            border: 1px dotted #000;
+            padding: 5px;
+            width: 300px;
+        }
+
+        @media (max-width:768px) {
+            .container {
+                width: 100%;
+            }
+
+            .data td {
+                width: 50%;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h2>Get the Mode</h2>
+        <table class="data">
+            <tr>
+                <td>collection</td>
+                <td><em><span id="array">no data available</span></em></td>
+            </tr>
+            <tr>
+                <td>mode</td>
+                <td><em><span id="mode">no data available</span></em></td>
+            </tr>
+        </table>
+        <button id="generate" type="button">generate new results</button>
+    </div>
+
+    <script>
+        var data = {
+            targets: {
+                body: document.getElementsByTagName("body"),
+                arrayEl: document.getElementById("array"),
+                modelEl: document.getElementById("mode"),
+                generateEl: document.getElementById("generate")
+            },
+            scriptName: "main.js",
+            v: Math.random(0, 1000) * 1000,
+            script: document.createElement("script")
+        };
+        // enqueue the script
+        data.script.src = data.scriptName + "?v=" + data.v.toString().replace(".", "");
+        data.targets.body[0].appendChild(data.script);
+    </script>
+</body>
+</html>
