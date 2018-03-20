@@ -62,7 +62,7 @@ var lineProcessorApp = function () {
 
         // sort the collection
         collection.sort(function (a, b) {
-            return a - b
+            return a - b;
         });
 
         while (index < len) {
@@ -78,7 +78,7 @@ var lineProcessorApp = function () {
                     }
                 } else {
                     // reset
-                    val = collection[index]
+                    val = collection[index];
                     count = 1;
                     marker += 1;
                     counts.push([val, count]);
