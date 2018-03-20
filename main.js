@@ -1,11 +1,11 @@
-var lineProcessorApp = function () {
+var lineProcessorApp = function (d) {
     "use strict";
 
     var model = {
-        targets: data.targets,
+        targets: d.targets,
         collectionLength: 100,
-        collectionMin: 80,
-        collectionMax: 90,
+        collectionMax: 0,
+        collectionMin: 25,
         collection: [],
         mode: null
     };
@@ -16,6 +16,15 @@ var lineProcessorApp = function () {
 
     function setMode(result) {
         model.mode = result;
+    }
+
+    function setUserInput(p) {
+        // sets the model with
+        // user input from the
+        // GET params.
+        model.collectionLength = Number(p[0][1]);
+        model.collectionMax = Number(p[1][1]);
+        model.collectionMin = Number(p[2][1]);
     }
 
     function getRandomInt(min, max) {
@@ -96,19 +105,47 @@ var lineProcessorApp = function () {
         return mode;
     }
 
+    function getGETParams(d) {
+        var result = [];
+        var tmp = [];
+
+        if (d.search.length > 0) {
+            d.search
+                .substr(1)
+                .split("&")
+                .forEach(function (item) {
+                    tmp = item.split("=");
+                    result.push([tmp[0], tmp[1]]);
+                });
+        }
+        return result;
+    }
+
     function render(m) {
         var arrayEl = m.targets.arrayEl;
         var modeEl = m.targets.modeEl;
+        var lenInputEl = m.targets.inputEls[0];
+        var maxInputEl = m.targets.inputEls[1];
+        var minInputEl = m.targets.inputEls[2];
         var collection = m.collection.toString();
 
         arrayEl.textContent = collection.replace(/,/g, " ");
         modeEl.textContent = m.mode.toString();
+        lenInputEl.value = m.collectionLength;
+        maxInputEl.value = m.collectionMax;
+        minInputEl.value = m.collectionMin;
     }
 
 
     function init() {
         var collection = [];
         var mode = null;
+        var params = getGETParams(d.loc);
+
+        // check for user input
+        if (params.length > 0) {
+            setUserInput(params);
+        }
 
         collection = generateCollection(model.collectionLength, model.collectionMin, model.collectionMax);
         setCollection(collection);
@@ -118,7 +155,7 @@ var lineProcessorApp = function () {
     }
 
     // button event
-    model.targets.generateEl.addEventListener("click", function () {
+    model.targets.generateEl.addEventListener("submit", function () {
         init();
     }, false);
 

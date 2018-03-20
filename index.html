@@ -44,6 +44,10 @@
             .data td {
                 width: 50%;
             }
+
+            button {
+                margin: 10px 0;
+            }
         }
     </style>
 </head>
@@ -60,7 +64,16 @@
                 <td><em><span id="mode">no data available</span></em></td>
             </tr>
         </table>
-        <button id="generate" type="button">generate new results</button>
+        <form method="GET">
+            <label>length</label>
+            <input type="number" name="len" max="1000" min="25">
+            <label>max</label>
+            <input type="number" name="max" max="100" min="0">
+            <label>min</label>
+            <input type="number" name="min" max="100" min="0">
+            <button id="generate" type="submit">generate new results</button>
+        </form>
+
     </div>
 
     <script>
@@ -69,8 +82,10 @@
                 body: document.getElementsByTagName("body"),
                 arrayEl: document.getElementById("array"),
                 modeEl: document.getElementById("mode"),
+                inputEls: document.getElementsByTagName("input"),
                 generateEl: document.getElementById("generate")
             },
+            loc: window.location,
             scriptName: "main.js",
             v: Math.random(0, 1000) * 1000,
             script: document.createElement("script")
